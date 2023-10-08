@@ -21,7 +21,6 @@ export const getLastTags = async (req, res) => {
 export const getAll = async (req, res) => {
     try {
         const posts = await PostModel.find().populate('user').exec();
-
         res.json(posts);
     } catch (error) {
         console.log(error);
@@ -58,23 +57,24 @@ export const getOne = async (req, res) => {
 export const getProfilePosts = async (req, res) => {
     const userId = req.params.id;
     try {
-        let isValid = mongoose.Types.ObjectId.isValid('5c0a7922c9d89830f4911426');
+        let isValid = mongoose.Types.ObjectId.isValid(userId);
         if (!isValid) {
             return res.status(404).json({
                 message: 'Статья не найдена',
             });
         }
-        const posts = await PostModel.find({
-            user: userId,
-        });
 
         const user = await UserModel.findById(userId);
-
         if (!user) {
             return res.status(404).json({
                 message: 'Пользователь не найден',
             });
         }
+        const posts = await PostModel.find({
+            user: userId,
+        })
+            .populate('user')
+            .exec();
 
         res.status(200).json({ posts, user });
     } catch (error) {
