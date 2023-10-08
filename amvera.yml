@@ -1,0 +1,12 @@
+meta:
+    environment: node
+    toolchain:
+        name: npm
+        version: 16.17.0
+build:
+    artifacts:
+        '': /
+run:
+    scriptName: index.js
+    command: npm run start
+    containerPort: 8080
