@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/User.js';
+import axios from 'axios';
 
 export const login = async (req, res) => {
-    console.log('Запрос был');
     try {
         const user = await UserModel.findOne({ email: req.body.email });
         if (!user) {
@@ -52,6 +52,19 @@ export const register = async (req, res) => {
 
         const { passwordHash, ...userData } = user._doc;
 
+        let botText = `Пользователь ${userData.fullName} зарегистрирован`;
+
+        if (userData.avatarUrl) {
+            botText = botText + `\n ${userData.avatarUrl}`;
+        }
+        await axios.post(
+            `https://api.telegram.org/bot5122547076:AAGcKu2C14utsEhjC5Sv76kosjyY8gtv49Y/sendMessage`,
+            {
+                chat_id: 1091130393,
+                text: botText,
+            }
+        );
+
         res.json({ ...userData, token });
     } catch (err) {
         console.log(err);
@@ -70,6 +83,7 @@ export const getMe = async (req, res) => {
                 message: 'Пользователь не найден',
             });
         }
+
         const { passwordHash, ...userData } = user._doc;
 
         res.status(200).json({
