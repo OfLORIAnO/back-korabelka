@@ -58,7 +58,7 @@ export const register = async (req, res) => {
             botText = botText + `\n ${userData.avatarUrl}`;
         }
         await axios.post(
-            `https://api.telegram.org/bot5122547076:AAGcKu2C14utsEhjC5Sv76kosjyY8gtv49Y/sendMessage`,
+            `https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`,
             {
                 chat_id: 1091130393,
                 text: botText,
