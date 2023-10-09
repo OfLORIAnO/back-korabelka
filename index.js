@@ -89,20 +89,17 @@ app.listen(process.env.PORT, (err) => {
     if (err) {
         return console.log(err);
     }
-    
     console.log(`Server is listening on port ${process.env.PORT}`);
-    notifyTelegram()
+    notifyTelegram();
 });
-
 
 async function notifyTelegram() {
     try {
         axios.post(`https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`, {
-        chat_id: 1091130393,
-        text: 'Видимо, мы упали, но не переживай, мы поднимаемся 😎😎😎',
-    });
+            chat_id: 1091130393,
+            text: 'Видимо, мы упали, но не переживай, мы поднимаемся 😎😎😎',
+        });
     } catch (error) {
-        console.log('Ошибка оповещения')
+        console.log('Ошибка оповещения');
     }
-    
 }
