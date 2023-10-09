@@ -23,7 +23,6 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, 'secret123', { expiresIn: '30d' });
         const { passwordHash, ...userData } = user._doc;
-        console.log('Мы до сюда дошли');
         res.json({ ...userData, token });
     } catch (error) {
         console.log(error);

@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import axios from 'axios';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -88,5 +89,9 @@ app.listen(process.env.PORT, (err) => {
     if (err) {
         return console.log(err);
     }
+    axios.post(`https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`, {
+        chat_id: 1091130393,
+        text: 'Видимо мы упали, но не переживай, мы поднимаемся',
+    });
     console.log(`Server is listening on port ${process.env.PORT}`);
 });
