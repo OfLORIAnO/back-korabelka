@@ -95,7 +95,7 @@ app.listen(process.env.PORT, (err) => {
 
 async function notifyTelegram() {
     try {
-        axios.post(`https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`, {
+        await axios.post(`https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`, {
             chat_id: 1091130393,
             text: 'Видимо, мы упали, но не переживай, мы поднимаемся 😎😎😎',
         });
