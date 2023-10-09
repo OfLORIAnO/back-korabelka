@@ -90,7 +90,7 @@ app.listen(process.env.PORT, (err) => {
         return console.log(err);
     }
     console.log(`Server is listening on port ${process.env.PORT}`);
-    notifyTelegram();
+    // notifyTelegram();
 });
 
 async function notifyTelegram() {
