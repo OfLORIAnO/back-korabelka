@@ -87,8 +87,8 @@ export const getProfilePosts = async (req, res) => {
         })
             .populate('user')
             .exec();
-        const page = req.params.page || 1;
-        const limit = req.params.limit || 10;
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 10;
 
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
