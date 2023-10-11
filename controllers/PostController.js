@@ -30,10 +30,6 @@ export const getAll = async (req, res) => {
 
         const sorted = posts.slice(startIndex, endIndex);
 
-        if (sorted.length === 0) {
-            throw new Error();
-        }
-
         res.json({
             length: posts.length,
             posts: sorted,
@@ -91,8 +87,15 @@ export const getProfilePosts = async (req, res) => {
         })
             .populate('user')
             .exec();
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 10;
 
-        res.status(200).json({ posts, user });
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
+        const sorted = posts.slice(startIndex, endIndex);
+
+        res.status(200).json({ length: sorted.length, posts: sorted, user });
     } catch (error) {
         console.error(error);
         res.status(500).json({
