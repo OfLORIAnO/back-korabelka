@@ -35,7 +35,6 @@ mongoose
     .connect(process.env.MONGO_URL)
     .then(() => {
         console.log('DB ok');
-        notifyTelegram();
     })
     .catch((err) => {
         console.log('db err', err);
