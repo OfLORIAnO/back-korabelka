@@ -28,12 +28,16 @@ export const getAll = async (req, res) => {
 
         const posts = await PostModel.find().populate('user').exec();
 
+        const sorted = posts.slice(startIndex, endIndex);
+
+        if (sorted.length === 0) {
+            throw new Error();
+        }
+
         res.json({
             length: posts.length,
-            posts: posts.slice(startIndex, endIndex),
+            posts: sorted,
         });
-
-        res.json(posts);
     } catch (error) {
         console.log(error);
         res.status(500).json({
