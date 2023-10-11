@@ -20,7 +20,19 @@ export const getLastTags = async (req, res) => {
 
 export const getAll = async (req, res) => {
     try {
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 10;
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
         const posts = await PostModel.find().populate('user').exec();
+
+        res.json({
+            length: posts.length,
+            posts: posts.slice(startIndex, endIndex),
+        });
+
         res.json(posts);
     } catch (error) {
         console.log(error);
