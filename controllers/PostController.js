@@ -95,7 +95,7 @@ export const getProfilePosts = async (req, res) => {
 
         const sorted = posts.slice(startIndex, endIndex);
 
-        res.status(200).json({ length: sorted.length, posts: sorted, user });
+        res.status(200).json({ length: posts.length, posts: sorted, user });
     } catch (error) {
         console.error(error);
         res.status(500).json({
