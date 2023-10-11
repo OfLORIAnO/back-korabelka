@@ -13,6 +13,20 @@ import {
     postCreateValidation,
 } from './validations.js';
 
+async function notifyTelegram() {
+    try {
+        const link = `https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`;
+        await fetch(link, {
+            method: 'POST',
+            body: JSON.stringify({
+                chat_id: 1091130393,
+                text: 'Видимо, мы упали, но не переживай, мы поднимаемся 😎😎😎',
+            }),
+        });
+    } catch (error) {
+        console.log('Ошибка оповещения');
+    }
+}
 import { checkAuth, handleValitaionErrors } from './utils/index.js';
 
 import { UserController, PostController } from './controllers/index.js';
@@ -21,6 +35,7 @@ mongoose
     .connect(process.env.MONGO_URL)
     .then(() => {
         console.log('DB ok');
+        notifyTelegram();
     })
     .catch((err) => {
         console.log('db err', err);
@@ -90,20 +105,4 @@ app.listen(process.env.PORT, (err) => {
         return console.log(err);
     }
     console.log(`Server is listening on port ${process.env.PORT}`);
-    notifyTelegram();
 });
-
-async function notifyTelegram() {
-    try {
-        const link = `https://api.telegram.org/bot${process.env.TG_TOKEN}/sendMessage`;
-        await fetch(link, {
-            method: 'POST',
-            body: JSON.stringify({
-                chat_id: 1091130393,
-                text: 'Видимо, мы упали, но не переживай, мы поднимаемся 😎😎😎',
-            }),
-        });
-    } catch (error) {
-        console.log('Ошибка оповещения');
-    }
-}
