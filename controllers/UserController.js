@@ -128,7 +128,6 @@ export const update = async (req, res) => {
         }
 
         await UserModel.updateOne({ _id: userId }, updateData);
-        console.log(updateData);
         res.json({
             success: true,
         });
