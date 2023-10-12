@@ -62,6 +62,7 @@ app.post(
     handleValitaionErrors,
     UserController.register
 );
+app.patch('/me/update/:id', checkAuth, UserController.update);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 app.get('/tags', checkAuth, PostController.getLastTags);

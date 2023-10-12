@@ -95,3 +95,47 @@ export const getMe = async (req, res) => {
         });
     }
 };
+
+export const update = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        if (!userId) {
+            return res.status(404).json({
+                message: 'Пользователь не найден',
+            });
+        }
+
+        const userVerifyId = req.body._id;
+
+        if (userId !== userVerifyId) {
+            return res.status(404).json({
+                message: 'я тут подумал... а не пойти бы тебе по стрелке Пирса',
+            });
+        }
+
+        const updateData = {
+            email: req.body.email,
+            fullName: req.body.fullName,
+            avatarUrl: req.body.avatarUrl,
+        };
+
+        if (req.body.password) {
+            const password = req.body.password;
+            const salt = await bcrypt.genSaltSync(10);
+            const hash = await bcrypt.hash(password, salt);
+            updateData.passwordHash = hash;
+        }
+
+        await UserModel.updateOne({ _id: userId }, updateData);
+        console.log(updateData);
+        res.json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось обновить профиль',
+        });
+    }
+};
