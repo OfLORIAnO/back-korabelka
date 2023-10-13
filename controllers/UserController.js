@@ -100,13 +100,12 @@ export const update = async (req, res) => {
     try {
         const userId = req.params.id;
 
-        const verifyUser = req.userId
+        const verifyUser = req.userId;
 
         if (userId !== verifyUser) {
             return res.status(404).json({
                 message: 'я тут подумал... а не пойти бы тебе по стрелке Пирса',
-            })
-                
+            });
         }
 
         const updateData = {
@@ -123,8 +122,9 @@ export const update = async (req, res) => {
         }
 
         await UserModel.updateOne({ _id: userId }, updateData);
+        const user = await UserModel.findById(userId);
         res.json({
-            success: true,
+            ...user._doc,
         });
     } catch (err) {
         console.log(err);
