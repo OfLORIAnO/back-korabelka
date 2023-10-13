@@ -100,18 +100,13 @@ export const update = async (req, res) => {
     try {
         const userId = req.params.id;
 
-        if (!userId) {
-            return res.status(404).json({
-                message: 'Пользователь не найден',
-            });
-        }
+        const verifyUser = req.userId
 
-        const userVerifyId = req.body._id;
-
-        if (userId !== userVerifyId) {
+        if (userId !== verifyUser) {
             return res.status(404).json({
                 message: 'я тут подумал... а не пойти бы тебе по стрелке Пирса',
-            });
+            })
+                
         }
 
         const updateData = {
