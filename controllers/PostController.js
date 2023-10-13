@@ -49,7 +49,9 @@ export const getOne = async (req, res) => {
             { _id: postId },
             { $inc: { viewsCount: 1 } },
             { new: true } // Чтобы получить обновленный документ
-        );
+        )
+            .populate('user')
+            .exec();
 
         if (!updatedDoc) {
             return res.status(404).json({
